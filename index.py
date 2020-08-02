@@ -16,6 +16,15 @@ class queryStringRequestHandler(tornado.web.RequestHandler):
 
         self.write("the number " + str(n) + " is " + r)
 
+class sumStringRequestHandler(tornado.web.RequestHandler):
+    def get(self):
+        x = int(self.get_argument("x"))
+        y = int(self.get_argument("y"))
+
+        result = str(x + y)
+
+        self.write(str(x) + " + " + str(y) + " = " + result)
+
 class staticRequestHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("index.html")
@@ -25,7 +34,8 @@ def make_app():
         (r"/", basicRequestHandler),
         (r"/blog", staticRequestHandler),
         (r"/isEven", queryStringRequestHandler),
-        (r"/tweet/([0-9]+)", resourceRequestHandler)
+        (r"/tweet/([0-9]+)", resourceRequestHandler),
+        (r"/sum", sumStringRequestHandler)
     ])
 
 if __name__ == "__main__":
